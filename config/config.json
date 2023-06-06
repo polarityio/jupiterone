@@ -1,0 +1,56 @@
+{
+  "name": "jupiterOne",
+  "acronym": "JPO",
+  "description": "",
+  "entityTypes": ["*"],
+  "styles": ["./styles/styles.less"],
+  "defaultColor": "light-blue",
+  "block": {
+    "component": {
+      "file": "./components/block.js"
+    },
+    "template": {
+      "file": "./templates/block.hbs"
+    }
+  },
+  "request": {
+    "cert": "",
+    "key": "",
+    "passphrase": "",
+    "ca": "",
+    "proxy": "",
+    "rejectUnauthorized": true
+  },
+  "logging": {
+    "level": "trace"
+  },
+  "options": [
+    {
+      "key": "url",
+      "name": "Jupiter One API URL",
+      "description": "URL for Jupiter One API.",
+      "default": "https://api.us.jupiterone.io",
+      "type": "text",
+      "userCanEdit": false,
+      "adminOnly": true
+    },
+    {
+      "key": "accountId",
+      "name": "Account ID",
+      "description": "",
+      "default": "",
+      "type": "password",
+      "userCanEdit": false,
+      "adminOnly": true
+    },
+    {
+      "key": "accessToken",
+      "name": "Access Token",
+      "description": "",
+      "default": "",
+      "type": "password",
+      "userCanEdit": false,
+      "adminOnly": true
+    }
+  ]
+}

@@ -1,0 +1,151 @@
+{{#if details}}
+  <div class='asset-header'>
+    <h1 class='display-name'>{{fa-icon 'server' fixedWidth=true}}
+      {{details.entity.displayName}}</h1>
+    <div class='asset-info'>
+      <span class='type'>{{details.entity._type}}</span>
+      <span class='class'>{{details.entity._class}}</span>
+    </div>
+  </div>
+  <hr class='separator' />
+  <h1 class='p-title'>{{fa-icon 'info' fixedWidth=true}} Properties:</h1>
+  {{! IP ASSET}}
+  {{#if (or (eq entity.type 'IPv4') (eq entity.type 'IPv6') (eq entity.type 'IP'))}}
+    {{#if details.entity.displayName}}
+      <div>
+        <span class='p-key'>Display Name:</span>
+        <span class='p-value'>{{details.entity.displayName}}</span>
+      </div>
+    {{/if}}
+    {{#if details.properties.ipAddress}}
+      <div>
+        <span class='p-key'>IP Address:</span>
+        <span class='p-value'>{{details.properties.ipAddress}}</span>
+      </div>
+    {{/if}}
+    {{#if details.properties.publicIpAddress}}
+      <div>
+        <span class='p-key'>Public IP Address:</span>
+        <span class='p-value'>{{details.properties.publicIpAddress}}</span>
+      </div>
+    {{/if}}
+    {{#if details.properties.validated}}
+      <div>
+        <span class='p-key'>Validated:</span>
+        <span class='p-value'>{{details.properties.validated}}</span>
+      </div>
+    {{/if}}
+  {{/if}}
+  {{! END OF ASSET}}
+  {{! USER}}
+  {{#if (eq entity.type 'custom')}}
+    {{#if details}}
+      <div class='asset-info'>
+        {{#if details.properties.arn}}
+          <div>
+            <span class='p-key'>ARN:</span>
+            <span class='p-value'>{{details.properties.arn}}</span>
+          </div>
+        {{/if}}
+        {{#if details.properties.userId}}
+          <div>
+            <span class='p-key'>User ID:</span>
+            <span class='p-value'>{{details.properties.userId}}</span>
+          </div>
+        {{/if}}
+        {{#if details.properties.username}}
+          <div>
+            <span class='p-key'>Username:</span>
+            <span class='p-value'>{{details.properties.username}}</span>
+          </div>
+        {{/if}}
+        {{#if details.properties.name}}
+          <div>
+            <span class='p-key'>Name:</span>
+            <span class='p-value'>{{details.properties.name}}</span>
+          </div>
+        {{/if}}
+        {{#if details.properties.createdOn}}
+          <div>
+            <span class='p-key'>Created On:</span>
+            <span class='p-value'>{{moment-format
+                details.properties.createdOn
+                timeZone=timezone
+              }}</span>
+          </div>
+        {{/if}}
+        {{#if details.properties.path}}
+          <div>
+            <span class='p-key'>Path:</span>
+            <span class='p-value'>{{details.properties.path}}</span>
+          </div>
+        {{/if}}
+        {{#if details.properties.passwordLastUsed}}
+          <div>
+            <span class='p-key'>Password Last Used:</span>
+            <span class='p-value'>{{moment-format
+                details.properties.passwordLastUsed
+                timeZone=timezone
+              }}</span>
+          </div>
+        {{/if}}
+        {{#if details.properties.webLink}}
+          <div>
+            <span class='p-key'>Web Link:</span>
+            <span class='p-value'>{{details.properties.webLink}}</span>
+          </div>
+        {{/if}}
+        {{#if details.properties.passwordEnabled}}
+          <div>
+            <span class='p-key'>Password Enabled:</span>
+            <span class='p-value'>{{details.properties.passwordEnabled}}</span>
+          </div>
+        {{/if}}
+        {{#if details.properties.passwordLastChanged}}
+          <div>
+            <span class='p-key'>Password Last Changed:</span>
+            <span class='p-value'>{{moment-format
+                details.properties.passwordLastChanged
+                timeZone=timezone
+              }}</span>
+          </div>
+        {{/if}}
+        {{#if details.properties.mfaEnabled}}
+          <div>
+            <span class='p-key'>MFA Enabled:</span>
+            <span class='p-value'>{{details.properties.mfaEnabled}}</span>
+          </div>
+        {{/if}}
+        {{#if details.properties.accessKeyEnabled}}
+          <div>
+            <span class='p-key'>accessKeyEnabled:</span>
+            <span class='p-value'>{{details.properties.accessKeyEnabled}}</span>
+          </div>
+        {{/if}}
+        {{#if details.properties.accessKeyLastUsed}}
+          <div>
+            <span class='p-key'>accessKeyLastUsed:</span>
+            <span class='p-value'>{{moment-format
+                details.properties.accessKeyLastUsed
+                timeZone=timezone
+              }}</span>
+          </div>
+        {{/if}}
+        {{#if details.properties.accountId}}
+          <div>
+            <span class='p-key'>accountId:</span>
+            <span class='p-value'>{{details.properties.accountId}}</span>
+          </div>
+        {{/if}}
+        {{#if details.properties.tag.AccountName}}
+          <div>
+            <span class='p-key'>tag.AccountName:</span>
+            <span class='p-value'>{{details.entity.tag.AccountName}}</span>
+          </div>
+        {{/if}}
+      </div>
+    {{/if}}
+
+  {{/if}}
+  {{! END OF USER}}
+{{/if}}
