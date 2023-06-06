@@ -8,11 +8,7 @@ Your Tenable-io URL including schema (i.e., https://).
 
 ### Access Key
 
-Your Tenable-io Access Key. The access key can be found by logging into Tenable.io and navigating to Settings -> My Account -> API Keys.
-
 ### Secret Key
-
-Your tenable-io Secret Key. The secret key can be found by logging into Tenable.io and navigating to Settings -> My Account -> API Keys.
 
 ## Installation Instructions
 
