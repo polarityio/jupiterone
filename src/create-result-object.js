@@ -19,26 +19,21 @@ class PolarityResult {
   }
 
   createResultsObject(apiResponse) {
-    const Logger = getLogger();
-
-    Logger.trace({ apiResponse }, 'apiResponse');
-
     return [
-      ...(apiResponse.assets || []).map((asset) => ({
-        entity: asset.entity,
-        data: {
-          summary: [],
-          details: asset.response
-        }
-      })),
-      ...(apiResponse.users || []).map((user) => ({
-        entity: user.entity,
-        data: {
-          summary: [],
-          details: user.response
-        }
-      }))
+      ...this.resultObject(apiResponse.assets || []),
+      ...this.resultObject(apiResponse.users || []),
+      ...this.resultObject(apiResponse.vulnerabilities || [])
     ];
+  }
+
+  resultObject(response) {
+    return response.map((result) => ({
+      entity: result.entity,
+      data: {
+        summary: createSummary(result.response),
+        details: result.response
+      }
+    }));
   }
 
   createNoResultsObject(apiResponse) {

@@ -4,11 +4,14 @@
       {{details.entity.displayName}}</h1>
     <div class='asset-info'>
       <span class='type'>{{details.entity._type}}</span>
-      <span class='class'>{{details.entity._class}}</span>
+      <span class='class'>
+        <span class='class-border'>{{details.entity._class}}</span>
+      </span>
     </div>
   </div>
   <hr class='separator' />
   <h1 class='p-title'>{{fa-icon 'info' fixedWidth=true}} Properties:</h1>
+
   {{! IP ASSET}}
   {{#if (or (eq entity.type 'IPv4') (eq entity.type 'IPv6') (eq entity.type 'IP'))}}
     {{#if details.entity.displayName}}
@@ -37,6 +40,7 @@
     {{/if}}
   {{/if}}
   {{! END OF ASSET}}
+
   {{! USER}}
   {{#if (eq entity.type 'custom')}}
     {{#if details}}
@@ -145,7 +149,130 @@
         {{/if}}
       </div>
     {{/if}}
-
   {{/if}}
   {{! END OF USER}}
+  {{! VULNS}}
+  {{#if (or (eq entity.type 'cve') (eq entity.type 'custom'))}}
+    {{#if details.properties.severity}}
+      <div>
+        <span class='p-key'>Severity:</span>
+        <span class='p-value'>{{details.properties.severity}}</span>
+      </div>
+    {{/if}}
+    {{#if details.properties.status}}
+      <div>
+        <span class='p-key'>Status:</span>
+        <span class='p-value'>{{details.properties.status}}</span>
+      </div>
+    {{/if}}
+    {{#if details.properties.score}}
+      <div>
+        <span class='p-key'>Score:</span>
+        <span class='p-value'>{{details.properties.score}}</span>
+      </div>
+    {{/if}}
+    {{#if details.properties.exploitability}}
+      <div>
+        <span class='p-key'>Exploitability:</span>
+        <span class='p-value'>{{details.properties.exploitability}}</span>
+      </div>
+    {{/if}}
+    {{#if details.properties.impact}}
+      <div>
+        <span class='p-key'>Impact:</span>
+        <span class='p-value'>{{details.properties.impact}}</span>
+      </div>
+    {{/if}}
+    {{#if details.properties.exploitStatus}}
+      <div>
+        <span class='p-key'>Exploit Status:</span>
+        <span class='p-value'>{{details.properties.exploitStatus}}</span>
+      </div>
+    {{/if}}
+    {{#if details.properties.exploitRating}}
+      <div>
+        <span class='p-key'>Exploit Rating:</span>
+        <span class='p-value'>{{details.properties.exploitRating}}</span>
+      </div>
+    {{/if}}
+    {{#if details.properties.open}}
+      <div>
+        <span class='p-key'>Open:</span>
+        <span class='p-value'>{{details.properties.open}}</span>
+      </div>
+    {{/if}}
+    {{#if details.properties.createdOn}}
+      <div>
+        <span class='p-key'>Created On:</span>
+        <span class='p-value'>{{moment-format
+            details.properties.createdOn
+            timeZone=timezone
+          }}</span>
+      </div>
+    {{/if}}
+    {{#if details.properties.closedOn}}
+      <div>
+        <span class='p-key'>Closed On:</span>
+        <span class='p-value'>{{moment-format
+            details.properties.closedOn
+            timeZone=timezone
+          }}</span>
+      </div>
+    {{/if}}
+    {{#if details.properties.updatedOn}}
+      <div>
+        <span class='p-key'>Updated On:</span>
+        <span class='p-value'>{{moment-format
+            details.properties.updatedOn
+            timeZone=timezone
+          }}</span>
+      </div>
+    {{/if}}
+    {{#if details.properties.publishedOn}}
+      <div>
+        <span class='p-key'>Published On:</span>
+        <span class='p-value'>{{moment-format
+            details.properties.publishedOn
+            timeZone=timezone
+          }}</span>
+      </div>
+    {{/if}}
+    {{#if details.properties.description}}
+      <div class='scrollable-block'>
+        <span class='p-key'>Description:</span>
+        <div class='scrollable-container'>
+          <table>
+            <tbody>
+              {{details.properties.description}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    {{/if}}
+  {{/if}}
+  {{! END OF VULNS}}
 {{/if}}
+
+{{! moment-format details.response.lastScan timeZone=timezone }}
+{{! "properties": {
+              "status": "closed",
+              "createdOn": "2023-05-17T20:42:04.000Z",
+              "closedOn": "2023-05-18T06:42:57.000Z",
+              "updatedOn": "2023-05-18T06:42:57.000Z",
+              "id": "89582535b3ce43bf97b301fb37ea9469_8280134b0de138f1827caed4e58c7e6e",
+              "cid": "feb0bbd1120842aabdc7eaab28cd1978",
+              "aid": "89582535b3ce43bf97b301fb37ea9469",
+              "name": "CVE-2023-28266",
+              "score": 5.5,
+              "description": "Windows Common Log File System Driver Information Disclosure Vulnerability\n",
+              "severity": "Medium",
+              "publishedOn": "2023-04-11T07:00:00.000Z",
+              "exploitability": 1.8,
+              "public": true,
+              "impact": 3.6,
+              "vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+              "open": false,
+              "cveId": "CVE-2023-28266",
+              "exploitStatus": 0,
+              "exprtRating": "MEDIUM",
+              "tag.AccountName": "Polarity Crowdstrike " }}

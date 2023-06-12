@@ -4,15 +4,16 @@ const { JupiterOneClient } = require('@jupiterone/jupiterone-client-nodejs');
 const { parseErrorToReadableJSON } = require('./src/errors');
 const { getLogger, setLogger } = require('./src/logger');
 const PolarityResult = require('./src/create-result-object');
-const { queryAssets, queryUserByName, queryVulnerabilities } = require('./src/query-api');
+const { queryEntities } = require('./src/query-api');
 
 let Logger = null;
+
+//TODO: Summary tags, search using, email and hostname.
 
 const startup = (logger) => {
   Logger = logger;
   setLogger(Logger);
 };
-// TODO ADD CVE LOOKUP, VULNS, ETC
 
 async function doLookup(entities, options, cb) {
   const Logger = getLogger();
@@ -25,21 +26,19 @@ async function doLookup(entities, options, cb) {
   try {
     const initializedClient = await j1Client.init();
 
-    // const assets = await queryAssets(initializedClient, entities);
+    const assets = await queryEntities(initializedClient, entities, 'Host');
+    const users = await queryEntities(initializedClient, entities, 'User');
+    const vulnerabilities = await queryEntities(initializedClient, entities, 'Finding');
 
-    // const users = await queryUserByName(initializedClient, entities);
+    const apiData = {
+      assets,
+      users,
+      vulnerabilities
+    };
 
-    const vulnerabilities = await queryVulnerabilities(initializedClient, entities);
-
-    // const apiData = {
-    //   assets,
-    //   users,
-    //   vulnerabilities
-    // };
-
-    // const lookupResults = PolarityResult.createResultsObject(apiData);
-    // Logger.trace({ lookupResults }, 'lookupResults');
-    // cb(null, lookupResults);
+    const lookupResults = PolarityResult.createResultsObject(apiData);
+    Logger.trace({ lookupResults }, 'lookupResults');
+    cb(null, lookupResults);
   } catch (error) {
     const errorAsPojo = parseErrorToReadableJSON(error);
     Logger.error({ error: errorAsPojo }, 'Error in doLookup');

@@ -4,14 +4,14 @@ module.exports = {
   description: '',
   entityTypes: ['*'],
   customTypes: [
-    // {
-    //   key: 'username',
-    //   regex: /[a-zA-Z0-9_-]{3,20}/
-    // },
     {
-      key: 'email',
-      regex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+      key: 'username',
+      regex: /[a-zA-Z0-9_-]{3,20}/
     }
+    // {
+    //   key: 'email',
+    //   regex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+    // }
   ],
   styles: ['./styles/styles.less'],
   defaultColor: 'light-blue',
