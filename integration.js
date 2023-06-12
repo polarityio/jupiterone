@@ -10,6 +10,14 @@ let Logger = null;
 
 //TODO: Summary tags, search using, email and hostname.
 
+// entities im currently testing with: 72.83.25.13
+// 108.45.130.98
+// 3.137.169.143
+// CVE-2023-28266
+// a username in the polarity org )
+
+// JupiterOne Docs: https://community.askj1.com/kb/docs
+
 const startup = (logger) => {
   Logger = logger;
   setLogger(Logger);
