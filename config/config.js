@@ -8,19 +8,15 @@ module.exports = {
       key: 'username',
       regex: /[a-zA-Z0-9_-]{3,20}/
     }
-    // {
-    //   key: 'email',
-    //   regex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-    // }
   ],
-  styles: ['./styles/styles.less'],
   defaultColor: 'light-blue',
+  styles: ['./client/styles.less'],
   block: {
     component: {
-      file: './components/block.js'
+      file: './client/block.js'
     },
     template: {
-      file: './templates/block.hbs'
+      file: './client/block.hbs'
     }
   },
   request: {
@@ -36,10 +32,10 @@ module.exports = {
   },
   options: [
     {
-      key: 'url',
-      name: 'Jupiter One API URL',
-      description: 'URL for Jupiter One API.',
-      default: 'https://api.us.jupiterone.io',
+      key: 'instanceId',
+      name: 'Instance ID',
+      description: 'The Instance ID found in your JupiterOne instances URL (https://<instanceID>.apps.us.jupiterone.io/).',
+      default: '',
       type: 'text',
       userCanEdit: false,
       adminOnly: true
@@ -49,7 +45,7 @@ module.exports = {
       name: 'Account ID',
       description: '',
       default: '',
-      type: 'password',
+      type: 'text',
       userCanEdit: false,
       adminOnly: true
     },
@@ -59,6 +55,15 @@ module.exports = {
       description: '',
       default: '',
       type: 'password',
+      userCanEdit: false,
+      adminOnly: true
+    },
+    {
+      key: 'searchAssetTypes',
+      name: 'Search Asset Types',
+      description: 'A comma separated list Asset Class Types you want to search.  These can found on this page "https:/<instanceID>.apps.us.jupiterone.io/assets/inventory"',
+      default: 'Host, User, Finding, Record',
+      type: 'text',
       userCanEdit: false,
       adminOnly: true
     }

@@ -1,12 +1,15 @@
 'use strict';
+const { validateOptions, parseUserOptions } = require('./server/userOptions');
+const { setLogger, getLogger } = require('./server/logging');
 
-const { JupiterOneClient } = require('@jupiterone/jupiterone-client-nodejs');
-const { parseErrorToReadableJSON } = require('./src/errors');
-const { getLogger, setLogger } = require('./src/logger');
-const PolarityResult = require('./src/create-result-object');
-const { queryEntities } = require('./src/query-api');
+const {
+  buildIgnoreResults,
+  organizeEntities,
+  parseErrorToReadableJson
+} = require('./server/dataTransformations');
 
-let Logger = null;
+const searchEntities = require('./server/searchEntities');
+const assembleLookupResults = require('./server/assembleLookupResults');
 
 //TODO: Summary tags, search using, email and hostname.
 
@@ -18,43 +21,41 @@ let Logger = null;
 
 // JupiterOne Docs: https://community.askj1.com/kb/docs
 
-const startup = (logger) => {
-  Logger = logger;
-  setLogger(Logger);
+const doLookup = async (entities, userOptions, cb) => {
+  const Logger = getLogger();
+  try {
+    Logger.debug({ entities }, 'Entities');
+
+    const { searchableEntities, nonSearchableEntities } = organizeEntities(entities);
+
+    const options = parseUserOptions(userOptions);
+
+    const {  } = await searchEntities(
+      searchableEntities,
+      options
+    );
+
+    Logger.trace({  });
+
+    const lookupResults = assembleLookupResults(
+      entities,
+      options
+    );
+
+    const ignoreResults = buildIgnoreResults(nonSearchableEntities);
+
+    Logger.trace({ lookupResults, ignoreResults }, 'Lookup Results');
+    cb(null, lookupResults.concat(ignoreResults));
+  } catch (error) {
+    const err = parseErrorToReadableJson(error);
+
+    Logger.error({ error, formattedError: err }, 'Get Lookup Results Failed');
+    cb({ detail: error.message || 'Lookup Failed', err });
+  }
 };
 
-async function doLookup(entities, options, cb) {
-  const Logger = getLogger();
-
-  const j1Client = new JupiterOneClient({
-    account: options.accountId,
-    accessToken: options.accessToken
-  });
-
-  try {
-    const initializedClient = await j1Client.init();
-
-    const assets = await queryEntities(initializedClient, entities, 'Host');
-    const users = await queryEntities(initializedClient, entities, 'User');
-    const vulnerabilities = await queryEntities(initializedClient, entities, 'Finding');
-
-    const apiData = {
-      assets,
-      users,
-      vulnerabilities
-    };
-
-    const lookupResults = PolarityResult.createResultsObject(apiData);
-    Logger.trace({ lookupResults }, 'lookupResults');
-    cb(null, lookupResults);
-  } catch (error) {
-    const errorAsPojo = parseErrorToReadableJSON(error);
-    Logger.error({ error: errorAsPojo }, 'Error in doLookup');
-    cb(errorAsPojo);
-  }
-}
-
 module.exports = {
-  startup,
+  startup: setLogger,
+  validateOptions,
   doLookup
 };
