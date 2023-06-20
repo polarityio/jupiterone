@@ -94,6 +94,10 @@ const encodeBase64 = (str) => str && Buffer.from(str).toString('base64');
 
 const decodeBase64 = (str) => str && Buffer.from(str, 'base64').toString('ascii');
 
+const encodeHex = (str) => str && Buffer.from(str, 'utf8').toString('hex');
+
+const decodeHex = (str) => str && Buffer.from(str, 'hex').toString('utf8');
+
 /** Infrastructure */
 const isNotIgnoredIp = (isIP, value) => !isIP || (isIP && !IGNORED_IPS.has(value));
 const organizeEntities = groupBy(({ isIP, value }) =>
@@ -122,5 +126,7 @@ module.exports = {
   getSetCookies,
   encodeBase64,
   decodeBase64,
-  buildIgnoreResults
+  buildIgnoreResults,
+  encodeHex,
+  decodeHex
 };

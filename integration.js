@@ -13,11 +13,17 @@ const assembleLookupResults = require('./server/assembleLookupResults');
 
 //TODO: Summary tags, search using, email and hostname.
 
-// entities im currently testing with: 72.83.25.13
-// 108.45.130.98
-// 3.137.169.143
-// CVE-2023-28266
-// a username in the polarity org )
+/* entities im currently testing with: 
+72.83.25.13
+108.45.130.98
+3.137.169.143
+CVE-2023-28266
+joe@polarity.io
+joem@polarity.io
+ed@polarity.io
+172.31.32.0
+*/ 
+//a username in the polarity org )
 
 // JupiterOne Docs: https://community.askj1.com/kb/docs
 

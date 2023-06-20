@@ -10,8 +10,7 @@ const validateOptions = async (options, callback) => {
   const stringOptionsErrorMessages = {
     instanceId: '* Required',
     accountId: '* Required',
-    accessToken: '* Required',
-    searchAssetTypes: '* Required'
+    accessToken: '* Required'
   };
 
   const stringValidationErrors = validateStringOptions(
@@ -19,42 +18,24 @@ const validateOptions = async (options, callback) => {
     options
   );
 
+  const searchAssetTypesEmptyError = !size(options.searchAssetTypes.value)
+    ? [{ key: 'searchAssetTypes', message: '* Required' }]
+    : [];
+
   const parsedOptions = flow(flattenOptions, parseUserOptions)(options);
 
-  const invalidSearchAssetTypeErrors = getInvalidSearchAssetTypeErrors(parsedOptions);
-
   const authenticationError = !(
-    size(stringValidationErrors) || size(invalidSearchAssetTypeErrors)
+    size(stringValidationErrors) || size(searchAssetTypesEmptyError)
   )
     ? await validateAuthentication(parsedOptions)
     : [];
 
   let errors = stringValidationErrors
-    .concat(authenticationError)
-    .concat(invalidSearchAssetTypeErrors);
+    .concat(searchAssetTypesEmptyError)
+    .concat(authenticationError);
 
   callback(null, errors);
 };
-
-const getInvalidSearchAssetTypeErrors = flow(
-  get('parsedSearchAssetTypes'),
-  map((searchAssetType) =>
-    !POSSIBLE_SEARCH_ASSET_TYPES.includes(searchAssetType) ? `"${searchAssetType}"` : ''
-  ),
-  compact,
-  join(', '),
-  (searchAssetTypeErrorMessage) =>
-    searchAssetTypeErrorMessage
-      ? [
-          {
-            key: 'searchAssetTypes',
-            message:
-              `${searchAssetTypeErrorMessage} are invalid Types.\n` +
-              'Go to the Assets Inventory page to find a list of valid ones.'
-          }
-        ]
-      : []
-);
 
 const buildTestQuery = (assetTypes) => `{
   queryV1(query: "FIND (${join(' | ', assetTypes)}) WITH createdOn > date.now - 1 hour") {
