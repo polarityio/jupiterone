@@ -36,15 +36,16 @@ const doLookup = async (entities, userOptions, cb) => {
 
     const options = parseUserOptions(userOptions);
 
-    const {  } = await searchEntities(
+    const { assetsQueryResults } = await searchEntities(
       searchableEntities,
       options
     );
 
-    Logger.trace({  });
+    Logger.trace({ assetsQueryResults });
 
     const lookupResults = assembleLookupResults(
       entities,
+      assetsQueryResults,
       options
     );
 

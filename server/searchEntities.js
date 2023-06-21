@@ -2,7 +2,7 @@ const { map } = require('lodash/fp');
 const { encodeHex } = require('./dataTransformations');
 const { getLogger } = require('./logging');
 const { requestsInParallel } = require('./request');
-const { buildQueryRequests, buildQueryResults } = require('./queries');
+const { buildAssetsQueryRequests, buildAssetsQueryResults } = require('./queries');
 
 const searchEntities = async (entities, options) => {
   const entitiesWithHexValues = map(
@@ -10,14 +10,13 @@ const searchEntities = async (entities, options) => {
     entities
   );
 
-  const queryRequests = buildQueryRequests(entitiesWithHexValues, options);
+  const assetsQueryRequests = buildAssetsQueryRequests(entitiesWithHexValues, options);
 
-  const queryResponse = await requestsInParallel(queryRequests);
+  const assetsQueryResponse = await requestsInParallel(assetsQueryRequests);
 
-  const queryResults = buildQueryResults(entitiesWithHexValues, queryResponse);
+  const assetsQueryResults = buildAssetsQueryResults(entitiesWithHexValues, assetsQueryResponse);
 
-  getLogger().trace({ test: 111111111, queryResults }, 'queryResults');
-  return { queryResults };
+  return { assetsQueryResults };
 };
 
 module.exports = searchEntities;

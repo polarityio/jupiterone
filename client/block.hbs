@@ -1,4 +1,88 @@
-{{#if details}}
+<ul class="nav nav-tabs">
+  {{#each details.assetsDisplayTabs as |assetsDisplayTab|}}
+    <li class="nav-item">
+      <a
+        {{action "changeTab" assetsDisplayTab}}
+        class="nav-link
+          {{if (or (eq activeTab assetsDisplayTab) (not activeTab)) 'active'}}"
+        href="#"
+      >
+        {{assetsDisplayTab}}
+      </a>
+    </li>
+  {{/each}}
+</ul>
+{{#each details.assetsDisplayTabs as |assetsDisplayTab|}}
+  {{#if (eq activeTab assetsDisplayTab)}}
+    {{#each (get details.assetsResults assetsDisplayTab) as |asset index|}}
+      <div class="tab-results">
+        {{#if (get expandableTitleStates (concat assetsDisplayTab index))}}
+          <a
+            href="#"
+            class="expandable-title"
+            {{on "click" (action "toggleExpandableTitle" assetsDisplayTab index)}}
+          >
+            <span class="text">{{asset.entity.displayName}}</span>
+            {{fa-icon "angle-up"}}
+          </a>
+          <div class="details">
+            <div class="p-link">
+              <a
+                href="https://{{block.userOptions.instanceId}}.apps.us.jupiterone.io/assets/inventory/{{asset.id}}"
+              >
+                View in JupiterOne
+                {{fa-icon icon="external-link-square" class="external-link-icon"}}
+              </a>
+            </div>
+            <div>
+              <span class="p-key">_Type: </span>
+              <span class="p-value">{{join ", " asset.entity._type}}</span>
+            </div>
+            {{#if asset.properties.tagAccountName}}
+              <div>
+                <span class="p-key">Tag Account Name: </span>
+                <span class="p-value">{{asset.properties.tagAccountName}}</span>
+              </div>
+            {{/if}}
+            {{#if asset.entity._integrationClass}}
+              <div>
+                <span class="p-key">Integration Classes: </span>
+                <span class="p-value">{{join ", " asset.entity._integrationClass}}</span>
+              </div>
+            {{/if}}
+            {{#each-in asset.properties as |label content|}}
+              {{#if (not (includes label excludedProperties))}}
+                <div>
+                  <span class="p-key">{{titleize (humanize (dasherize label))}}: </span>
+                  <span class="p-value">{{content}}</span>
+                </div>
+              {{/if}}
+            {{/each-in}}
+          </div>
+        {{else}}
+          <a
+            href="#"
+            class="expandable-title"
+            {{on "click" (action "toggleExpandableTitle" assetsDisplayTab index)}}
+          >
+            <span class="text">{{asset.entity.displayName}}</span>
+            {{fa-icon "angle-down"}}
+          </a>
+          <div class="p-link">
+            <a
+              href="https://{{block.userOptions.instanceId}}.apps.us.jupiterone.io/assets/inventory/{{asset.id}}"
+            >
+              View in JupiterOne
+              {{fa-icon icon="external-link-square" class="external-link-icon"}}
+            </a>
+          </div>
+        {{/if}}
+      </div>
+    {{/each}}
+  {{/if}}
+{{/each}}
+
+{{!-- {{#if details}}
   <div class='asset-header'>
     <h1 class='display-name'>{{fa-icon 'server' fixedWidth=true}}
       {{details.entity.displayName}}</h1>
@@ -275,4 +359,4 @@
               "cveId": "CVE-2023-28266",
               "exploitStatus": 0,
               "exprtRating": "MEDIUM",
-              "tag.AccountName": "Polarity Crowdstrike " }}
+              "tag.AccountName": "Polarity Crowdstrike " }} --}}

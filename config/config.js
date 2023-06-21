@@ -1,6 +1,6 @@
 module.exports = {
-  name: 'jupiterOne',
-  acronym: 'JPO',
+  name: 'JupiterOne',
+  acronym: 'J1',
   description: '',
   entityTypes: ['*'],
   // customTypes: [
@@ -44,7 +44,7 @@ module.exports = {
     {
       key: 'accountId',
       name: 'Account ID',
-      description: '',
+      description: 'TODO',
       default: '',
       type: 'text',
       userCanEdit: false,
@@ -53,7 +53,7 @@ module.exports = {
     {
       key: 'accessToken',
       name: 'Access Token',
-      description: '',
+      description: 'TODO',
       default: '',
       type: 'password',
       userCanEdit: false,

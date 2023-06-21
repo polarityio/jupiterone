@@ -1,8 +1,8 @@
 const { flow, chunk, map, join, get } = require('lodash/fp');
 
-const buildQueryRequests = (entitiesWithHexValues, options) =>
+const buildAssetsQueryRequests = (entitiesWithHexValues, options) =>
   flow(
-    chunk(3), //TODO Load test different chunk sizes
+    chunk(10), //TODO Load test different chunk sizes
     map((entityChunk) => ({
       options,
       query: `{${flow(
@@ -22,4 +22,4 @@ const buildAliasedQueryForThisEntity = ({ hexValue, value }, searchAssetTypes) =
     join(' | ')
   )(searchAssetTypes)}) WITH displayName~='${value}'") { data }`;
 
-module.exports = buildQueryRequests;
+module.exports = buildAssetsQueryRequests;

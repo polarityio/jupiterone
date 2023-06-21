@@ -1,7 +1,7 @@
-const buildQueryRequests = require('./buildQueryRequests');
-const buildQueryResults = require('./buildQueryResults');
+const buildAssetsQueryRequests = require('./buildAssetsQueryRequests');
+const buildAssetsQueryResults = require('./buildAssetsQueryResults');
 
 module.exports = {
-  buildQueryRequests,
-  buildQueryResults
+  buildAssetsQueryRequests,
+  buildAssetsQueryResults
 };
