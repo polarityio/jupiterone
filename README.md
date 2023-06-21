@@ -1,26 +1,34 @@
-# Polarity Tenable IO Integration
+# Polarity JupiterOne Integration
 
 ![image](https://img.shields.io/badge/status-beta-green.svg)
 
-Tenable.io is a cloud-based vulnerability management platform that helps organizations identify and remediate vulnerabilities across their IT infrastructure, using a range of data sources and reporting capabilities to provide a comprehensive view of their security posture.
+JupiterOne is a platform that allows you to secure your attack surface with continuous asset discovery and attack path analysis.
 
-The Polarity Tenable.io integration allows users to search for assets and associated vulnerabilities. Assets can be searched using IP address, hostname, or CVEs.
+The Polarity JupiterOne Integration allows you to search all standard Asset Types, including Hosts Users Findings & Records, by all entity types, including IP Addresses, Hostnames, Email Addresses, Domains, and more.
 
-To learn more about Tenable IO, visit the [official website](www.tenable.com).
+To learn more about JupiterOne, visit the [official website](https://www.jupiterone.com/).
 
-## Tenable IO Integration Options
+## JupiterOne Integration Options
 
-### Tenable IO URL
+### Instance ID
+The Instance ID found in your JupiterOne instance's URL `https://<instanceID>.apps.us.jupiterone.io/`.
 
-Your Tenable-io URL including schema (i.e., https://).
+### Account ID
+Your JupiterOne Account ID found in `Settings -> Profiles`
 
-### Access Key
+### Access Token
+Your JupiterOne Access Token found in `Settings -> User API Tokens`
 
-Your Tenable-io Access Key. The access key can be found by logging into Tenable.io and navigating to Settings -> My Account -> API Keys.
+### Search Asset Types
+The Asset Class Types you want to search.  Example results can be found at "https:/<instanceID>.apps.us.jupiterone.io/assets/inventory"
 
-### Secret Key
+***Default***: `Host, User, Finding, Record`
 
-Your tenable-io Secret Key. The secret key can be found by logging into Tenable.io and navigating to Settings -> My Account -> API Keys.
+***Possible Values***: 
+```txt
+Configuration, ControlPolicy, Question, Record, Resource, Rule, Finding, Monitor, Document, Policy, Organization, Person, Root, Vendor, Domain, DomainRecord, DomainZone, Firewall, Gateway, Internet, IpAddress, Network, NetworkEndpoint, NetworkInterface, AccessKey, AccessPolicy, AccessRole, Account, Certificate, CryptoKey, Everyone, Key, PasswordPolicy, Secret, User, UserGroup, Backup, Database, DataStore, Disk, Logs, Queue, Host, HostAgent, Image, Task, Application, ApplicationEndpoint, Channel, Group, Repository, Service, Subscription
+```
+
 
 ## Installation Instructions
 

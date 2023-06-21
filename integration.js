@@ -11,22 +11,6 @@ const {
 const searchEntities = require('./server/searchEntities');
 const assembleLookupResults = require('./server/assembleLookupResults');
 
-//TODO: Summary tags, search using, email and hostname.
-
-/* entities im currently testing with: 
-72.83.25.13
-108.45.130.98
-3.137.169.143
-CVE-2023-28266
-joe@polarity.io
-joem@polarity.io
-ed@polarity.io
-172.31.32.0
-*/ 
-//a username in the polarity org )
-
-// JupiterOne Docs: https://community.askj1.com/kb/docs
-
 const doLookup = async (entities, userOptions, cb) => {
   const Logger = getLogger();
   try {
@@ -36,18 +20,11 @@ const doLookup = async (entities, userOptions, cb) => {
 
     const options = parseUserOptions(userOptions);
 
-    const { assetsQueryResults } = await searchEntities(
-      searchableEntities,
-      options
-    );
+    const { assetsQueryResults } = await searchEntities(searchableEntities, options);
 
     Logger.trace({ assetsQueryResults });
 
-    const lookupResults = assembleLookupResults(
-      entities,
-      assetsQueryResults,
-      options
-    );
+    const lookupResults = assembleLookupResults(entities, assetsQueryResults, options);
 
     const ignoreResults = buildIgnoreResults(nonSearchableEntities);
 

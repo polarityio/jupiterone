@@ -2,7 +2,7 @@ const { flow, chunk, map, join, get } = require('lodash/fp');
 
 const buildAssetsQueryRequests = (entitiesWithHexValues, options) =>
   flow(
-    chunk(10), //TODO Load test different chunk sizes
+    chunk(5), 
     map((entityChunk) => ({
       options,
       query: `{${flow(

@@ -1,14 +1,8 @@
 module.exports = {
   name: 'JupiterOne',
   acronym: 'J1',
-  description: '',
+  description: 'Search all standard Asset Types in JupiterOne',
   entityTypes: ['*'],
-  // customTypes: [
-  //   {
-  //     key: 'username',
-  //     regex: /[a-zA-Z0-9_-]{3,20}/
-  //   }
-  // ],
   defaultColor: 'light-blue',
   styles: ['./client/styles.less'],
   block: {
@@ -28,7 +22,7 @@ module.exports = {
     rejectUnauthorized: true
   },
   logging: {
-    level: 'trace' //trace, debug, info, warn, error, fatal
+    level: 'info' //trace, debug, info, warn, error, fatal
   },
   options: [
     {
@@ -44,7 +38,7 @@ module.exports = {
     {
       key: 'accountId',
       name: 'Account ID',
-      description: 'TODO',
+      description: 'Your JupiterOne Account ID found in Settings -> Profiles',
       default: '',
       type: 'text',
       userCanEdit: false,
@@ -53,7 +47,7 @@ module.exports = {
     {
       key: 'accessToken',
       name: 'Access Token',
-      description: 'TODO',
+      description: 'Your JupiterOne Access Token found in Settings -> User API Tokens',
       default: '',
       type: 'password',
       userCanEdit: false,

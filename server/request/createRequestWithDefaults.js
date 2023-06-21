@@ -96,7 +96,7 @@ const createRequestWithDefaults = () => {
     };
   };
 
-  const checkForStatusError = ({ statusCode, body }, requestOptions) => {
+  const checkForStatusError = ({ statusCode, body, headers }, requestOptions) => {
     const Logger = getLogger();
 
     const requestOptionsWithoutSensitiveData = {
@@ -128,6 +128,7 @@ const createRequestWithDefaults = () => {
         ? statusCode
         : get('code', responseBodyError);
       requestError.detail = get('error', body);
+      requestError.headers = headers;
       requestError.description = JSON.stringify(body);
       requestError.requestOptions = JSON.stringify(requestOptionsWithoutSensitiveData);
       throw requestError;
@@ -145,11 +146,19 @@ const createRequestWithDefaults = () => {
     body: { query },
     ...requestOptions
   });
+  
   const requestDefaultsWithInterceptors = requestWithDefaultsBuilder(
     authenticateRequest,
     get('body.data'),
     (error, RO) => {
       //Handle 429 as hitting the rate limit
+      if (error.statusCode === 429) {
+        error.message = `JupiterOne Rate limit exceeded. ${
+          error.headers['RateLimit-Reset']
+            ? `${error.headers['RateLimit-Reset']} seconds until requests can go through`
+            : ''
+        }`;
+      }
       throw error;
     }
   );
