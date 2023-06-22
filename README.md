@@ -29,7 +29,6 @@ The Asset Class Types you want to search.  Example results can be found at "http
 Configuration, ControlPolicy, Question, Record, Resource, Rule, Finding, Monitor, Document, Policy, Organization, Person, Root, Vendor, Domain, DomainRecord, DomainZone, Firewall, Gateway, Internet, IpAddress, Network, NetworkEndpoint, NetworkInterface, AccessKey, AccessPolicy, AccessRole, Account, Certificate, CryptoKey, Everyone, Key, PasswordPolicy, Secret, User, UserGroup, Backup, Database, DataStore, Disk, Logs, Queue, Host, HostAgent, Image, Task, Application, ApplicationEndpoint, Channel, Group, Repository, Service, Subscription
 ```
 
-
 ## Installation Instructions
 
 Installation instructions for integrations are provided on the [PolarityIO GitHub Page](https://polarityio.github.io/).
