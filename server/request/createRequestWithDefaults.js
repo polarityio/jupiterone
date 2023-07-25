@@ -143,7 +143,7 @@ const createRequestWithDefaults = () => {
       'LifeOmic-Account': options.accountId,
       'content-type': 'application/json'
     },
-    body: { query },
+    body: { query, variables: { asdf:1,  } },
     ...requestOptions
   });
   
