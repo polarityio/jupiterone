@@ -1,26 +1,16 @@
 module.exports = {
-  name: 'jupiterOne',
-  acronym: 'JPO',
-  description: '',
+  name: 'JupiterOne',
+  acronym: 'J1',
+  description: 'Search all standard Asset Types in JupiterOne',
   entityTypes: ['*'],
-  customTypes: [
-    // {
-    //   key: 'username',
-    //   regex: /[a-zA-Z0-9_-]{3,20}/
-    // },
-    {
-      key: 'email',
-      regex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-    }
-  ],
-  styles: ['./styles/styles.less'],
   defaultColor: 'light-blue',
+  styles: ['./client/styles.less'],
   block: {
     component: {
-      file: './components/block.js'
+      file: './client/block.js'
     },
     template: {
-      file: './templates/block.hbs'
+      file: './client/block.hbs'
     }
   },
   request: {
@@ -28,17 +18,18 @@ module.exports = {
     key: '',
     passphrase: '',
     ca: '',
-    proxy: ""
+    proxy: ''
   },
   logging: {
-    level: 'trace' //trace, debug, info, warn, error, fatal
+    level: 'info' //trace, debug, info, warn, error, fatal
   },
   options: [
     {
-      key: 'url',
-      name: 'Jupiter One API URL',
-      description: 'URL for Jupiter One API.',
-      default: 'https://api.us.jupiterone.io',
+      key: 'instanceId',
+      name: 'Instance ID',
+      description:
+        "The Instance ID found in your JupiterOne instance's URL (https://<instanceID>.apps.us.jupiterone.io/).",
+      default: '',
       type: 'text',
       userCanEdit: false,
       adminOnly: true
@@ -46,18 +37,260 @@ module.exports = {
     {
       key: 'accountId',
       name: 'Account ID',
-      description: '',
+      description: 'Your JupiterOne Account ID found in Settings -> Profiles',
       default: '',
-      type: 'password',
+      type: 'text',
       userCanEdit: false,
       adminOnly: true
     },
     {
       key: 'accessToken',
       name: 'Access Token',
-      description: '',
+      description: 'Your JupiterOne Access Token found in Settings -> User API Tokens',
       default: '',
       type: 'password',
+      userCanEdit: false,
+      adminOnly: true
+    },
+    {
+      key: 'searchAssetTypes',
+      name: 'Search Asset Types',
+      description:
+        'The Asset Class Types you want to search.  Example results can be found at "https:/<instanceID>.apps.us.jupiterone.io/assets/inventory"',
+      default: [
+        {
+          value: 'Host',
+          display: 'Host'
+        },
+        {
+          value: 'User',
+          display: 'User'
+        },
+        {
+          value: 'Finding',
+          display: 'Finding'
+        },
+        {
+          value: 'Record',
+          display: 'Record'
+        }
+      ],
+      type: 'select',
+      options: [
+        {
+          value: 'Configuration',
+          display: 'Configuration'
+        },
+        {
+          value: 'ControlPolicy',
+          display: 'ControlPolicy'
+        },
+        {
+          value: 'Question',
+          display: 'Question'
+        },
+        {
+          value: 'Record',
+          display: 'Record'
+        },
+        {
+          value: 'Resource',
+          display: 'Resource'
+        },
+        {
+          value: 'Rule',
+          display: 'Rule'
+        },
+        {
+          value: 'Finding',
+          display: 'Finding'
+        },
+        {
+          value: 'Monitor',
+          display: 'Monitor'
+        },
+        {
+          value: 'Document',
+          display: 'Document'
+        },
+        {
+          value: 'Policy',
+          display: 'Policy'
+        },
+        {
+          value: 'Organization',
+          display: 'Organization'
+        },
+        {
+          value: 'Person',
+          display: 'Person'
+        },
+        {
+          value: 'Root',
+          display: 'Root'
+        },
+        {
+          value: 'Vendor',
+          display: 'Vendor'
+        },
+        {
+          value: 'Domain',
+          display: 'Domain'
+        },
+        {
+          value: 'DomainRecord',
+          display: 'DomainRecord'
+        },
+        {
+          value: 'DomainZone',
+          display: 'DomainZone'
+        },
+        {
+          value: 'Firewall',
+          display: 'Firewall'
+        },
+        {
+          value: 'Gateway',
+          display: 'Gateway'
+        },
+        {
+          value: 'Internet',
+          display: 'Internet'
+        },
+        {
+          value: 'IpAddress',
+          display: 'IpAddress'
+        },
+        {
+          value: 'Network',
+          display: 'Network'
+        },
+        {
+          value: 'NetworkEndpoint',
+          display: 'NetworkEndpoint'
+        },
+        {
+          value: 'NetworkInterface',
+          display: 'NetworkInterface'
+        },
+        {
+          value: 'AccessKey',
+          display: 'AccessKey'
+        },
+        {
+          value: 'AccessPolicy',
+          display: 'AccessPolicy'
+        },
+        {
+          value: 'AccessRole',
+          display: 'AccessRole'
+        },
+        {
+          value: 'Account',
+          display: 'Account'
+        },
+        {
+          value: 'Certificate',
+          display: 'Certificate'
+        },
+        {
+          value: 'CryptoKey',
+          display: 'CryptoKey'
+        },
+        {
+          value: 'Everyone',
+          display: 'Everyone'
+        },
+        {
+          value: 'Key',
+          display: 'Key'
+        },
+        {
+          value: 'PasswordPolicy',
+          display: 'PasswordPolicy'
+        },
+        {
+          value: 'Secret',
+          display: 'Secret'
+        },
+        {
+          value: 'User',
+          display: 'User'
+        },
+        {
+          value: 'UserGroup',
+          display: 'UserGroup'
+        },
+        {
+          value: 'Backup',
+          display: 'Backup'
+        },
+        {
+          value: 'Database',
+          display: 'Database'
+        },
+        {
+          value: 'DataStore',
+          display: 'DataStore'
+        },
+        {
+          value: 'Disk',
+          display: 'Disk'
+        },
+        {
+          value: 'Logs',
+          display: 'Logs'
+        },
+        {
+          value: 'Queue',
+          display: 'Queue'
+        },
+        {
+          value: 'Host',
+          display: 'Host'
+        },
+        {
+          value: 'HostAgent',
+          display: 'HostAgent'
+        },
+        {
+          value: 'Image',
+          display: 'Image'
+        },
+        {
+          value: 'Task',
+          display: 'Task'
+        },
+        {
+          value: 'Application',
+          display: 'Application'
+        },
+        {
+          value: 'ApplicationEndpoint',
+          display: 'ApplicationEndpoint'
+        },
+        {
+          value: 'Channel',
+          display: 'Channel'
+        },
+        {
+          value: 'Group',
+          display: 'Group'
+        },
+        {
+          value: 'Repository',
+          display: 'Repository'
+        },
+        {
+          value: 'Service',
+          display: 'Service'
+        },
+        {
+          value: 'Subscription',
+          display: 'Subscription'
+        }
+      ],
+      multiple: true,
       userCanEdit: false,
       adminOnly: true
     }
