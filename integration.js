@@ -1,53 +1,45 @@
 'use strict';
+const { validateOptions, parseUserOptions } = require('./server/userOptions');
+const { setLogger, getLogger } = require('./server/logging');
 
-const { JupiterOneClient } = require('@jupiterone/jupiterone-client-nodejs');
-const { parseErrorToReadableJSON } = require('./src/errors');
-const { getLogger, setLogger } = require('./src/logger');
-const PolarityResult = require('./src/create-result-object');
-const { queryAssets, queryUserByName, queryVulnerabilities } = require('./src/query-api');
+const {
+  buildIgnoreResults,
+  organizeEntities,
+  parseErrorToReadableJson
+} = require('./server/dataTransformations');
 
-let Logger = null;
+const searchEntities = require('./server/searchEntities');
+const assembleLookupResults = require('./server/assembleLookupResults');
 
-const startup = (logger) => {
-  Logger = logger;
-  setLogger(Logger);
-};
-// TODO ADD CVE LOOKUP, VULNS, ETC
-
-async function doLookup(entities, options, cb) {
+const doLookup = async (entities, userOptions, cb) => {
   const Logger = getLogger();
-
-  const j1Client = new JupiterOneClient({
-    account: options.accountId,
-    accessToken: options.accessToken
-  });
-
   try {
-    const initializedClient = await j1Client.init();
+    Logger.debug({ entities }, 'Entities');
 
-    // const assets = await queryAssets(initializedClient, entities);
+    const { searchableEntities, nonSearchableEntities } = organizeEntities(entities);
 
-    // const users = await queryUserByName(initializedClient, entities);
+    const options = parseUserOptions(userOptions);
 
-    const vulnerabilities = await queryVulnerabilities(initializedClient, entities);
+    const { assetsQueryResults } = await searchEntities(searchableEntities, options);
 
-    // const apiData = {
-    //   assets,
-    //   users,
-    //   vulnerabilities
-    // };
+    Logger.trace({ assetsQueryResults });
 
-    // const lookupResults = PolarityResult.createResultsObject(apiData);
-    // Logger.trace({ lookupResults }, 'lookupResults');
-    // cb(null, lookupResults);
+    const lookupResults = assembleLookupResults(entities, assetsQueryResults, options);
+
+    const ignoreResults = buildIgnoreResults(nonSearchableEntities);
+
+    Logger.trace({ lookupResults, ignoreResults }, 'Lookup Results');
+    cb(null, lookupResults.concat(ignoreResults));
   } catch (error) {
-    const errorAsPojo = parseErrorToReadableJSON(error);
-    Logger.error({ error: errorAsPojo }, 'Error in doLookup');
-    cb(errorAsPojo);
+    const err = parseErrorToReadableJson(error);
+
+    Logger.error({ error, formattedError: err }, 'Get Lookup Results Failed');
+    cb({ detail: error.message || 'Lookup Failed', err });
   }
-}
+};
 
 module.exports = {
-  startup,
+  startup: setLogger,
+  validateOptions,
   doLookup
 };

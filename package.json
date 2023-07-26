@@ -1,14 +1,15 @@
 {
-  "main": "./integration.js",
   "name": "jupiter-one",
-  "version": "3.0.0",
+  "version": "3.0.1",
+  "main": "./integration.js",
   "private": true,
   "license": "MIT",
   "author": "Polarity",
   "dependencies": {
-    "@jupiterone/jupiterone-client-nodejs": "^0.27.0",
     "async": "^3.2.4",
+    "bottleneck": "^2.19.5",
     "lodash": "^4.17.21",
+    "luxon": "^3.3.0",
     "node-cache": "^5.1.2",
     "postman-request": "^2.88.1-postman.31"
   }
