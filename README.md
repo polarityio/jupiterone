@@ -6,6 +6,14 @@ JupiterOne is a platform that allows you to secure your attack surface with cont
 
 The Polarity JupiterOne Integration allows you to search all standard Asset Types, including Hosts Users Findings & Records, by all entity types, including IP Addresses, Hostnames, Email Addresses, Domains, and more.
 
+<div style="display:flex; align-items: flex-start; justify-content:flex-start; align-items:flex-start;">
+  <img width="350" alt="Integration Example User" src="./assets/example-hostagent.png">
+  <img width="350" alt="Integration Example Vuln" src="./assets/example-vuln.png">
+</div>
+<div style="display:flex; align-items: flex-start; justify-content:flex-start; align-items:flex-start;">
+  <img width="350" alt="Integration Example Host Agent" src="./assets/example-user.png">
+</div>
+
 To learn more about JupiterOne, visit the [official website](https://www.jupiterone.com/).
 
 ## JupiterOne Integration Options
