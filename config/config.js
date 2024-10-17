@@ -2,7 +2,20 @@ module.exports = {
   name: 'JupiterOne',
   acronym: 'J1',
   description: 'Search all standard Asset Types in JupiterOne',
-  entityTypes: ['*'],
+  entityTypes: [
+    'IPv4',
+    'IPv4CIDR',
+    'IPv6',
+    'domain',
+    'url',
+    'MD5',
+    'SHA1',
+    'SHA256',
+    'email',
+    'cve',
+    'MAC',
+    'string'
+  ],
   defaultColor: 'light-blue',
   styles: ['./client/styles.less'],
   block: {
